@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 
 import Label from "./utils/Label";
 import { Button } from "./utils/Button";
 
 import ExperienceForm from "./utils/ExperienceForm";
+import EducationForm from "./utils/EducationForm";
 import DisplayExperience from "./utils/DisplayExperience";
+import DisplayEducation from "./utils/DisplayEducation";
 import DisplayInformationTop from "./utils/DisplayInformationTop";
 
 import PersonalForm from "./utils/PersonalForm";
@@ -17,38 +19,41 @@ const Main = () => {
   const [phoneNumber, setPhoneNumber] = useState("PhoneNumber");
   const [email, setEmail] = useState("Email");
   const [description, setDescription] = useState("Description");
-  const [position, setPosition] = useState("Position");
-  const [company, setCompany] = useState("Company");
-  const [city, setCity] = useState("City");
-  const [from, setFrom] = useState("From");
-  const [to, setTo] = useState("To");
 
-  let expForm = [
-    <ExperienceForm
-      statePosition={(e) => setPosition(e.target.value)}
-      stateCompany={(e) => setCompany(e.target.value)}
-      stateCity={(e) => setCity(e.target.value)}
-      stateFrom={(e) => setFrom(e.target.value)}
-      stateTo={(e) => setTo(e.target.value)}
-    />,
-  ];
+  const [experienceList, setExperienceList] = useState([{ position: "", company: "", city: "", from: "", to: "" }]);
+  const [educationList, setEducationList] = useState([
+    { university: "", city: "", degree: "", subject: "", from: "", to: "" },
+  ]);
 
-  let expDisplay = [
-    <DisplayExperience
-      statePosition={position}
-      stateCompany={company}
-      stateCity={city}
-      stateFrom={from}
-      stateTo={to}
-    />,
-  ];
+  const handleExperienceAdd = () => {
+    setExperienceList([...experienceList, { position: "", company: "", city: "", from: "", to: "" }]);
+  };
+  const handleEducationAdd = () => {
+    setEducationList([...educationList, { university: "", city: "", degree: "", subject: "", from: "", to: "" }]);
+  };
 
-  const [experienceForm, setExperienceForm] = useState(expForm);
-  const [experienceDisplay, setExperienceDisplay] = useState(expDisplay);
+  const handleExperienceRemove = (index) => {
+    const list = [...experienceList];
+    list.splice(index, 1);
+    setExperienceList(list);
+  };
+  const handleEducationRemove = (index) => {
+    const list = [...educationList];
+    list.splice(index, 1);
+    setEducationList(list);
+  };
 
-  const addComponent = () => {
-    setExperienceForm([...experienceForm, expForm]);
-    setExperienceDisplay([...experienceDisplay, expDisplay]);
+  const handleExperienceChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...experienceList];
+    list[index][name] = value;
+    setExperienceList(list);
+  };
+  const handleEducationChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...educationList];
+    list[index][name] = value;
+    setEducationList(list);
   };
 
   return (
@@ -64,15 +69,57 @@ const Main = () => {
           stateEmail={(e) => setEmail(e.target.value)}
           stateDescription={(e) => setDescription(e.target.value)}
         />
-        <ExperienceForm
-          statePosition={(e) => setPosition(e.target.value)}
-          stateCompany={(e) => setCompany(e.target.value)}
-          stateCity={(e) => setCity(e.target.value)}
-          stateFrom={(e) => setFrom(e.target.value)}
-          stateTo={(e) => setTo(e.target.value)}
-        />
+        {experienceList.map((singleExperience, index) => (
+          <Fragment>
+            <ExperienceForm
+              index={index}
+              key={index}
+              styleTitle={style.inputCard.title}
+              valuePosition={singleExperience.position}
+              statePosition={(e) => handleExperienceChange(e, index)}
+              valueCompany={singleExperience.company}
+              stateCompany={(e) => handleExperienceChange(e, index)}
+              valueCity={singleExperience.city}
+              stateCity={(e) => handleExperienceChange(e, index)}
+              valueFrom={singleExperience.from}
+              stateFrom={(e) => handleExperienceChange(e, index)}
+              valueTo={singleExperience.to}
+              stateTo={(e) => handleExperienceChange(e, index)}
+            />
 
-        <Button text={"Call Component"} onClick={addComponent} />
+            {experienceList.length - 1 === index && experienceList.length < 4 && (
+              <Button text={"Add"} onClick={handleExperienceAdd} />
+            )}
+            {experienceList.length > 1 && <Button text={"Remove"} onClick={() => handleExperienceRemove(index)} />}
+          </Fragment>
+        ))}
+
+        {educationList.map((singleEducation, index) => (
+          <Fragment>
+            <EducationForm
+              index={index}
+              key={index}
+              styleTitle={style.inputCard.title}
+              valueUniversity={singleEducation.university}
+              stateUniversity={(e) => handleEducationChange(e, index)}
+              valueCity={singleEducation.city}
+              stateCity={(e) => handleEducationChange(e, index)}
+              valueDegree={singleEducation.degree}
+              stateDegree={(e) => handleEducationChange(e, index)}
+              valueSubject={singleEducation.subject}
+              stateSubject={(e) => handleEducationChange(e, index)}
+              valueFrom={singleEducation.from}
+              stateFrom={(e) => handleEducationChange(e, index)}
+              valueTo={singleEducation.to}
+              stateTo={(e) => handleEducationChange(e, index)}
+            />
+
+            {educationList.length - 1 === index && educationList.length < 4 && (
+              <Button text={"Add"} onClick={handleEducationAdd} />
+            )}
+            {educationList.length > 1 && <Button text={"Remove"} onClick={() => handleEducationRemove(index)} />}
+          </Fragment>
+        ))}
       </div>
       <div className="display" style={style.displayCard}>
         <DisplayInformationTop
@@ -88,13 +135,27 @@ const Main = () => {
         <div className="centerRightContainer" style={style.displayCard.centerRightContainer}>
           <div className="centerInfo" style={style.displayCard.centerRightContainer.centerInfo}>
             <Label style={style.label.description} value={description} />
-            <DisplayExperience
-              statePosition={position}
-              stateCompany={company}
-              stateCity={city}
-              stateFrom={from}
-              stateTo={to}
-            />
+            {experienceList.map((singleExperience, index) => (
+              <DisplayExperience
+                key={index}
+                statePosition={singleExperience.position}
+                stateCompany={singleExperience.company}
+                stateCity={singleExperience.city}
+                stateFrom={singleExperience.from}
+                stateTo={singleExperience.to}
+              />
+            ))}
+            {educationList.map((singleEducation, index) => (
+              <DisplayEducation
+                key={index}
+                stateUniversity={singleEducation.university}
+                stateCity={singleEducation.city}
+                stateDegree={singleEducation.degree}
+                stateSubject={singleEducation.subject}
+                stateFrom={singleEducation.from}
+                stateTo={singleEducation.to}
+              />
+            ))}
           </div>
           <div className="rightInfo" style={style.displayCard.centerRightContainer.rightInfo}>
             <Label style={style.label.adresse} value={adresse} />
