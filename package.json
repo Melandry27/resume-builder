@@ -1,7 +1,11 @@
 {
-  "name": "melandry-react-training",
+  "name": "resume-builder-heroku",
+  "description": "Website to create your own resume",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "@fortawesome/free-regular-svg-icons": "^6.1.0",
     "@fortawesome/free-solid-svg-icons": "^6.1.0",
