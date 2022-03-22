@@ -12,13 +12,15 @@ export default Inputs;
 
 const style = {
   input: {
-    margin: "20px 10px 10px 10px",
+    margin: "5px 10px 10px 5px",
     border: "none",
     borderRadius: "5px",
     backgroundColor: "#f3f6f4",
-    height: "35px",
+    height: "30px",
     color: "black",
-    fontSize: "20px",
+    fontSize: "18px",
+    fontWeight: "700",
+    paddingLeft: "10px",
   },
   container: {
     display: "flex",

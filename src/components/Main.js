@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from "react";
+import jsPDF from "jspdf";
 
 import Label from "./utils/Label";
 import { Button } from "./utils/Button";
@@ -20,16 +21,26 @@ const Main = () => {
   const [email, setEmail] = useState("Email");
   const [description, setDescription] = useState("Description");
 
-  const [experienceList, setExperienceList] = useState([{ position: "", company: "", city: "", from: "", to: "" }]);
+  const [width, setWidth] = useState("800px");
+
+  const [experienceList, setExperienceList] = useState([
+    { position: "Position", company: "Company", city: "City", from: "From", to: "To" },
+  ]);
   const [educationList, setEducationList] = useState([
-    { university: "", city: "", degree: "", subject: "", from: "", to: "" },
+    { university: "University", city: "City", degree: "Degree", subject: "Subject", from: "From", to: "To" },
   ]);
 
   const handleExperienceAdd = () => {
-    setExperienceList([...experienceList, { position: "", company: "", city: "", from: "", to: "" }]);
+    setExperienceList([
+      ...experienceList,
+      { position: "Position", company: "Company", city: "City", from: "From", to: "To" },
+    ]);
   };
   const handleEducationAdd = () => {
-    setEducationList([...educationList, { university: "", city: "", degree: "", subject: "", from: "", to: "" }]);
+    setEducationList([
+      ...educationList,
+      { university: "University", city: "City", degree: "Degree", subject: "Subject", from: "From", to: "To" },
+    ]);
   };
 
   const handleExperienceRemove = (index) => {
@@ -54,6 +65,18 @@ const Main = () => {
     const list = [...educationList];
     list[index][name] = value;
     setEducationList(list);
+  };
+
+  const generatePdf = () => {
+    const doc = new jsPDF("p", "pt", "a4");
+    doc.html(document.querySelector(".display"), {
+      callback: function (pdf) {
+        setWidth("595px");
+        const pageCount = doc.internal.getNumberOfPages();
+        pdf.deletePage(pageCount);
+        pdf.save("MyResume.pdf");
+      },
+    });
   };
 
   return (
@@ -88,9 +111,15 @@ const Main = () => {
             />
 
             {experienceList.length - 1 === index && experienceList.length < 4 && (
-              <Button text={"Add"} onClick={handleExperienceAdd} />
+              <Button text={"Add Experience"} style={style.inputCard.buttonExperience} onClick={handleExperienceAdd} />
             )}
-            {experienceList.length > 1 && <Button text={"Remove"} onClick={() => handleExperienceRemove(index)} />}
+            {experienceList.length > 1 && (
+              <Button
+                text={`Remove Experience ${index + 1}`}
+                style={style.inputCard.buttonRemove}
+                onClick={() => handleExperienceRemove(index)}
+              />
+            )}
           </Fragment>
         ))}
 
@@ -115,52 +144,75 @@ const Main = () => {
             />
 
             {educationList.length - 1 === index && educationList.length < 4 && (
-              <Button text={"Add"} onClick={handleEducationAdd} />
+              <Button text={"Add Education"} style={style.inputCard.buttonEducation} onClick={handleEducationAdd} />
             )}
-            {educationList.length > 1 && <Button text={"Remove"} onClick={() => handleEducationRemove(index)} />}
+            {educationList.length > 1 && (
+              <Button
+                text={`Remove Education ${index + 1}`}
+                style={style.inputCard.buttonRemove}
+                onClick={() => handleEducationRemove(index)}
+              />
+            )}
           </Fragment>
         ))}
+        <button onClick={() => generatePdf()} style={style.inputCard.buttonPDF} type="primary">
+          Generate PDF
+        </button>
       </div>
-      <div className="display" style={style.displayCard}>
-        <DisplayInformationTop
-          styleTopTitle={style.label.container.topTitle}
-          styleContainerTop={style.label.container.topInfo}
-          styleFirstName={style.label.firstName}
-          styleName={style.label.name}
-          styleTitle={style.label.title}
-          stateFirstName={firstName}
-          stateName={name}
-          stateTitle={title}
-        />
-        <div className="centerRightContainer" style={style.displayCard.centerRightContainer}>
-          <div className="centerInfo" style={style.displayCard.centerRightContainer.centerInfo}>
-            <Label style={style.label.description} value={description} />
-            {experienceList.map((singleExperience, index) => (
-              <DisplayExperience
-                key={index}
-                statePosition={singleExperience.position}
-                stateCompany={singleExperience.company}
-                stateCity={singleExperience.city}
-                stateFrom={singleExperience.from}
-                stateTo={singleExperience.to}
-              />
-            ))}
-            {educationList.map((singleEducation, index) => (
-              <DisplayEducation
-                key={index}
-                stateUniversity={singleEducation.university}
-                stateCity={singleEducation.city}
-                stateDegree={singleEducation.degree}
-                stateSubject={singleEducation.subject}
-                stateFrom={singleEducation.from}
-                stateTo={singleEducation.to}
-              />
-            ))}
-          </div>
-          <div className="rightInfo" style={style.displayCard.centerRightContainer.rightInfo}>
-            <Label style={style.label.adresse} value={adresse} />
-            <Label style={style.label.phoneNumber} value={phoneNumber} />
-            <Label style={style.label.email} value={email} />
+      <div style={style.displayCardContainer}>
+        <div className="display" style={style.displayCard}>
+          <DisplayInformationTop
+            styleTopTitle={style.label.container.topTitle}
+            styleContainerTop={style.label.container.topInfo}
+            styleFirstName={style.label.firstName}
+            styleName={style.label.name}
+            styleTitle={style.label.title}
+            stateFirstName={firstName}
+            stateName={name}
+            stateTitle={title}
+          />
+          <div className="centerRightContainer" style={style.displayCard.centerRightContainer}>
+            <div className="centerInfo" style={style.displayCard.centerRightContainer.centerInfo}>
+              <Label style={style.displayCard.centerRightContainer.description} value={"Description"} />
+              <hr style={{ margin: "5px 30px 5px 10px" }}></hr>
+              <Label style={style.label.description} value={description} />
+              <Label value={"Experience"} style={{ fontSize: "24px", color: "#3399ff", margin: "25px 0px 0px 10px" }} />
+              <hr style={{ margin: "5px 30px 5px 10px" }}></hr>
+              {experienceList.map((singleExperience, index) => (
+                <DisplayExperience
+                  key={index}
+                  statePosition={singleExperience.position}
+                  stateCompany={singleExperience.company}
+                  stateCity={singleExperience.city}
+                  stateFrom={singleExperience.from}
+                  stateTo={singleExperience.to}
+                />
+              ))}
+              <Label value={"Education"} style={{ fontSize: "24px", color: "#3399ff", margin: "25px 0px 0px 10px" }} />
+              <hr style={{ margin: "5px 30px 5px 10px" }}></hr>
+              {educationList.map((singleEducation, index) => (
+                <DisplayEducation
+                  key={index}
+                  stateUniversity={singleEducation.university}
+                  stateCity={singleEducation.city}
+                  stateDegree={singleEducation.degree}
+                  stateSubject={singleEducation.subject}
+                  stateFrom={singleEducation.from}
+                  stateTo={singleEducation.to}
+                />
+              ))}
+            </div>
+
+            <div className="rightInfo" style={style.displayCard.centerRightContainer.rightInfo}>
+              <Label style={style.label.email} value={"Personal Details"} />
+              <hr style={{ margin: "5px 3px 0px 3px", backgroundColor: "#4B4B4B", height: "1px", border: "none" }} />
+              <Label style={style.label.adresse} value={"Adresse"} />
+              <Label style={style.label.phoneNumber} value={adresse} />
+              <Label style={style.label.adresse} value={"Phone Number"} />
+              <Label style={style.label.phoneNumber} value={phoneNumber} />
+              <Label style={style.label.adresse} value={"Email"} />
+              <Label style={style.label.phoneNumber} value={email} />
+            </div>
           </div>
         </div>
       </div>
@@ -173,32 +225,87 @@ export default Main;
 const style = {
   main: {
     display: "flex",
-    backgroundColor: "#eeeeee",
+    flexWrap: "wrap",
+    backgroundColor: "lightgrey",
     marginTop: "5px",
   },
   inputCard: {
     fontFamily: "Consolas",
     minHeight: "800px",
     height: "auto",
-    width: "35%",
-    minWidth: "35%",
-    margin: "50px",
-    backgroundColor: "lightgrey",
+    width: "800px",
+    margin: "50px 100px 50px 100px",
+    backgroundColor: "#C8C8C8",
     borderRadius: "3px",
     boxShadow:
       "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
     title: {
-      fontSize: "36px",
-      fontWeight: "500",
+      fontSize: "28px",
+      fontWeight: "900",
       display: "flex",
       justifyContent: "center",
+      color: "dimgrey",
+      textShadow:
+        "1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC",
+    },
+    buttonRemove: {
+      backgroundColor: "#9B4A4A",
+      color: "#323232",
+      border: "solid 1px #A3A3A3",
+      borderRadius: "10px",
+      display: "block",
+      margin: "5px 0",
+      padding: "2px",
+      width: "100%",
+      fontSize: "20px",
+      fontWeight: "900",
+    },
+    buttonExperience: {
+      backgroundColor: "#BFFFF0",
+      color: "#323232",
+      border: "solid 1px #A3A3A3",
+      borderRadius: "10px",
+      display: "block",
+      margin: "5px 0",
+      padding: "2px",
+      width: "100%",
+      fontSize: "20px",
+      fontWeight: "900",
+    },
+    buttonEducation: {
+      backgroundColor: "#BFFFF0",
+      color: "#323232",
+      border: "solid 1px #A3A3A3",
+      borderRadius: "10px",
+      display: "block",
+      margin: "5px 0",
+      padding: "2px",
+      width: "100%",
+      fontSize: "20px",
+      fontWeight: "900",
+    },
+    buttonPDF: {
+      backgroundColor: "#9B4A4A",
+      color: "#323232",
+      border: "solid 1px #A3A3A3",
+      borderRadius: "10px",
+      display: "block",
+      margin: "5px 0",
+      padding: "2px",
+      width: "100%",
+      fontSize: "20px",
+      fontWeight: "900",
     },
   },
-  displayCard: {
-    minHeight: "800px",
-    width: "65%",
-    margin: "50px",
+  displayCardContainer: {
+    margin: "50px 100px 50px 100px",
     marginRight: "100px",
+    //width: "31%",
+    width: "595px",
+  },
+  displayCard: {
+    maxHeight: "800px",
+    minHeight: "800px",
     backgroundColor: "grey",
     boxShadow:
       "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
@@ -211,10 +318,10 @@ const style = {
         wordBreak: "break-all",
         flexDirection: "column",
         minWidth: "0%",
-        width: "70%",
+        width: "65%",
         minHeight: "100%",
         height: "100%",
-        backgroundColor: "blue",
+        backgroundColor: "#EBEBEB",
       },
       rightInfo: {
         display: "flex",
@@ -222,17 +329,22 @@ const style = {
         wordBreak: "break-all",
         flexDirection: "column",
         minWidth: "0%",
-        width: "30%",
+        width: "35%",
         minHeight: "100%",
         height: "100%",
-        backgroundColor: "red",
+        backgroundColor: "#D7D7D7",
+      },
+      description: {
+        fontSize: "24px",
+        margin: "10px 0px 0px 10px",
+        color: "#3399ff",
       },
     },
   },
   label: {
     container: {
       topInfo: {
-        backgroundColor: "lightyellow",
+        backgroundColor: "#3399ff",
         height: "100px",
         width: "100%",
       },
@@ -243,39 +355,39 @@ const style = {
     },
     firstName: {
       fontSize: "48px",
-      color: "black",
+      color: "white",
+
       marginRight: "10px",
       marginLeft: "5px",
     },
     name: {
       fontSize: "48px",
-      color: "black",
+      color: "white",
     },
     title: {
       fontSize: "28px",
       fontWeight: "600",
-      color: "black",
+      color: "white",
       marginLeft: "5px",
     },
     adresse: {
-      fontSize: "36px",
+      fontSize: "24px",
       color: "black",
-      border: "solid 3px black",
+      marginTop: "15px",
     },
     phoneNumber: {
-      fontSize: "36px",
-      color: "black",
-      border: "solid 3px black",
+      fontSize: "20px",
+      color: "#555555",
     },
     email: {
-      fontSize: "36px",
-      color: "black",
-      border: "solid 3px black",
+      fontSize: "24px",
+      color: "#3399ff",
+      margin: "10px 0px 0px 3px",
     },
     description: {
-      fontSize: "36px",
-      color: "black",
-      border: "solid 3px black",
+      fontSize: "24px",
+      color: "#4d4d4d",
+      marginLeft: "10px",
     },
   },
 };
