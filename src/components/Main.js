@@ -83,7 +83,7 @@ const Main = () => {
     <div className="main" style={style.main}>
       <div className="input-form" style={style.inputCard}>
         <PersonalForm
-          styleTitle={style.inputCard.title}
+          styleTitle={style.inputCard.title1}
           stateFirstName={(e) => setFirstname(e.target.value)}
           stateName={(e) => setName(e.target.value)}
           stateTitle={(e) => setTitle(e.target.value)}
@@ -97,7 +97,7 @@ const Main = () => {
             <ExperienceForm
               index={index}
               key={index}
-              styleTitle={style.inputCard.title}
+              styleTitle={style.inputCard.title2}
               valuePosition={singleExperience.position}
               statePosition={(e) => handleExperienceChange(e, index)}
               valueCompany={singleExperience.company}
@@ -128,7 +128,7 @@ const Main = () => {
             <EducationForm
               index={index}
               key={index}
-              styleTitle={style.inputCard.title}
+              styleTitle={style.inputCard.title3}
               valueUniversity={singleEducation.university}
               stateUniversity={(e) => handleEducationChange(e, index)}
               valueCity={singleEducation.city}
@@ -226,32 +226,49 @@ const style = {
   main: {
     display: "flex",
     flexWrap: "wrap",
-    backgroundColor: "lightgrey",
-    marginTop: "5px",
+    backgroundColor: "#F0F0F0",
+    //minHeight: "1200px",
+    height: "auto",
   },
   inputCard: {
     fontFamily: "Consolas",
-    minHeight: "800px",
+    minHeight: "1050px",
     height: "auto",
     width: "800px",
     margin: "50px 100px 50px 100px",
-    backgroundColor: "#C8C8C8",
-    borderRadius: "3px",
+    backgroundColor: "#E8E8E8",
+    borderRadius: "5px",
     boxShadow:
       "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
-    title: {
-      fontSize: "28px",
+    title1: {
+      fontSize: "32px",
       fontWeight: "900",
       display: "flex",
       justifyContent: "center",
-      color: "dimgrey",
-      textShadow:
-        "1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC",
+      color: "#AA96DA",
+      textShadow: "1px 1px 2px #000000",
+    },
+    title2: {
+      fontSize: "32px",
+      fontWeight: "900",
+      display: "flex",
+      justifyContent: "center",
+      color: "#FCBAD3",
+      textShadow: "1px 1px 2px #000000",
+    },
+    title3: {
+      fontSize: "32px",
+      fontWeight: "900",
+      display: "flex",
+      justifyContent: "center",
+      color: "#FFFFD2",
+      textShadow: "1px 1px 2px #000000",
     },
     buttonRemove: {
-      backgroundColor: "#9B4A4A",
-      color: "#323232",
-      border: "solid 1px #A3A3A3",
+      backgroundColor: "#E8E8E8",
+      textShadow: "1px 1px 2px #000000",
+      color: "#9B4A4A",
+      border: "2px solid #6E6E6E",
       borderRadius: "10px",
       display: "block",
       margin: "5px 0",
@@ -261,9 +278,10 @@ const style = {
       fontWeight: "900",
     },
     buttonExperience: {
-      backgroundColor: "#BFFFF0",
-      color: "#323232",
-      border: "solid 1px #A3A3A3",
+      backgroundColor: "#E8E8E8",
+      textShadow: "1px 1px 2px #000000",
+      color: "#FCBAD3",
+      border: "2px solid #6E6E6E",
       borderRadius: "10px",
       display: "block",
       margin: "5px 0",
@@ -273,9 +291,10 @@ const style = {
       fontWeight: "900",
     },
     buttonEducation: {
-      backgroundColor: "#BFFFF0",
-      color: "#323232",
-      border: "solid 1px #A3A3A3",
+      backgroundColor: "#E8E8E8",
+      textShadow: "1px 1px 2px #000000",
+      color: "#FFFFD2",
+      border: "2px solid #6E6E6E",
       borderRadius: "10px",
       display: "block",
       margin: "5px 0",
@@ -285,9 +304,10 @@ const style = {
       fontWeight: "900",
     },
     buttonPDF: {
-      backgroundColor: "#9B4A4A",
-      color: "#323232",
-      border: "solid 1px #A3A3A3",
+      backgroundColor: "#E8E8E8",
+      textShadow: "1px 1px 2px #000000",
+      color: "#9B4A4A",
+      border: "2px solid #6E6E6E",
       borderRadius: "10px",
       display: "block",
       margin: "5px 0",
@@ -300,6 +320,7 @@ const style = {
   displayCardContainer: {
     margin: "50px 100px 50px 100px",
     marginRight: "100px",
+    marginBottom: "150px",
     //width: "31%",
     width: "595px",
   },

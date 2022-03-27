@@ -20,13 +20,11 @@ const styleHeader = {
     height: "100px",
     width: "100%",
     fontSize: "32px",
-    backgroundColor: "#BFFFF0",
-    boxShadow:
-      "1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC",
+    backgroundColor: "#C8C8C8",
+    borderBottom: "2px groove #C0C0C0",
   },
   title: {
-    color: "#F0FFC2",
-    textShadow:
-      "1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC",
+    color: "#A8D8EA",
+    textShadow: "4px 3px 0 #7A7A7A, 1px 1px 2px rgba(0,0,0,0)",
   },
 };

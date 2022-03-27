@@ -13,9 +13,9 @@ export default Inputs;
 const style = {
   input: {
     margin: "5px 10px 10px 5px",
-    border: "none",
+    border: "2px solid #6E6E6E",
     borderRadius: "5px",
-    backgroundColor: "#f3f6f4",
+    backgroundColor: "#F5F5F5",
     height: "30px",
     color: "black",
     fontSize: "18px",
