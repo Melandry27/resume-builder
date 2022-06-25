@@ -21,7 +21,7 @@ const Main = () => {
   const [email, setEmail] = useState("Email");
   const [description, setDescription] = useState("Description");
 
-  const [width, setWidth] = useState("800px");
+  const [setWidth] = useState("800px");
 
   const [experienceList, setExperienceList] = useState([
     { position: "Position", company: "Company", city: "City", from: "From", to: "To" },
