@@ -21,7 +21,7 @@ const Main = () => {
   const [email, setEmail] = useState("Email");
   const [description, setDescription] = useState("Description");
 
-  const [setWidth] = useState("800px");
+  const [width, setWidth] = useState("800px");
 
   const [experienceList, setExperienceList] = useState([
     { position: "Position", company: "Company", city: "City", from: "From", to: "To" },
@@ -69,6 +69,7 @@ const Main = () => {
 
   const generatePdf = () => {
     const doc = new jsPDF("p", "pt", "a4");
+    console.log(width);
     doc.html(document.querySelector(".display"), {
       callback: function (pdf) {
         setWidth("595px");
