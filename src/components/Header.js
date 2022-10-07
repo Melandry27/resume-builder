@@ -17,14 +17,14 @@ const styleHeader = {
     justifyContent: "center",
     margin: "0",
     padding: "0",
-    height: "100px",
+    height: "auto",
+    minHeight: "100px",
     width: "100%",
-    fontSize: "32px",
-    backgroundColor: "#C8C8C8",
+    backgroundColor: "#F0F0F0",
     borderBottom: "2px groove #C0C0C0",
   },
   title: {
     color: "#A8D8EA",
-    textShadow: "4px 3px 0 #7A7A7A, 1px 1px 2px rgba(0,0,0,0)",
+    fontSize: "72px",
   },
 };

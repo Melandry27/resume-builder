@@ -21,7 +21,7 @@ const Main = () => {
   const [email, setEmail] = useState("Email");
   const [description, setDescription] = useState("Description");
 
-  const [width, setWidth] = useState("800px");
+  const [width, setWidth] = useState("31%");
 
   const [experienceList, setExperienceList] = useState([
     { position: "Position", company: "Company", city: "City", from: "From", to: "To" },
@@ -227,16 +227,18 @@ const style = {
   main: {
     display: "flex",
     flexWrap: "wrap",
-    backgroundColor: "#F0F0F0",
+    backgroundColor: "white",
     //minHeight: "1200px",
     height: "auto",
+    justifyContent: "center",
   },
   inputCard: {
     fontFamily: "Consolas",
     minHeight: "1050px",
     height: "auto",
-    width: "800px",
-    margin: "50px 100px 50px 100px",
+    //width: "800px",
+    width: "40%",
+    margin: "50px 25px 50px 0px",
     backgroundColor: "#E8E8E8",
     borderRadius: "5px",
     boxShadow:
@@ -277,6 +279,7 @@ const style = {
       width: "100%",
       fontSize: "20px",
       fontWeight: "900",
+      cursor: "pointer",
     },
     buttonExperience: {
       backgroundColor: "#E8E8E8",
@@ -290,6 +293,7 @@ const style = {
       width: "100%",
       fontSize: "20px",
       fontWeight: "900",
+      cursor: "pointer",
     },
     buttonEducation: {
       backgroundColor: "#E8E8E8",
@@ -303,6 +307,7 @@ const style = {
       width: "100%",
       fontSize: "20px",
       fontWeight: "900",
+      cursor: "pointer",
     },
     buttonPDF: {
       backgroundColor: "#E8E8E8",
@@ -316,13 +321,12 @@ const style = {
       width: "100%",
       fontSize: "20px",
       fontWeight: "900",
+      cursor: "pointer",
     },
   },
   displayCardContainer: {
-    margin: "50px 100px 50px 100px",
-    marginRight: "100px",
+    margin: "50px 0px 50px 25px",
     marginBottom: "150px",
-    //width: "31%",
     width: "595px",
   },
   displayCard: {
